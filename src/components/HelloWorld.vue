@@ -8,7 +8,7 @@
      </v-flex>
     
     <!-- Foto e detalhes da unidade -->    
-    <v-flex xs8 offset-xs2>
+    <v-flex xs8 offset-xs2 class="text-xl-left">
       <v-card>
         <v-card-media class="white--text" src="">
           <v-container fill-height fluid>
@@ -21,25 +21,25 @@
         </v-card-media>
         <v-card-title>
           <div>
-            <span> {{imovel[0].nome}} </span><br>
-            <span>Codigo no Inep:  e CNPJ: </span><br>
-            <span>Status da Escola</span>
+            <span class="text-xl-left destaque">{{imovel[0].descricao}} {{imovel[0].nome}} </span><br>
+            <span class="text-xl-left detalhe">Codigo no Inep: {{imovel[0].inep}}</span> <span class="text-xl-left detalhe">CNPJ: SEM CNPJA AINDA</span><br>
           </div>
         </v-card-title>
-        <v-card-actions>
-          <v-chip color="green" text-color="white">if Ativa ou </v-chip>
-          <v-chip label outline color="red">Outline</v-chip>
+        <v-card-actions class="text-xl-right">
+          <p class="text-xl-left detalhe">Status da Escola</p>
+          <v-chip v-if="situacao" color="green" text-color="white">Ativa</v-chip>
+          <v-chip v-else label outline color="red">Inativa</v-chip>
         </v-card-actions>
       </v-card>
     </v-flex>
         <!-- informações laterais -->    
     <v-flex xs1>
       <label>Vagas na Escola</label>
-      <p>vagas</p>
+      <p>FALTA PREENCHER</p>
       <label>Tipo de escola</label>
       <div class="text-xs-center">
-        <v-chip>Anexo</v-chip>
-        <v-chip color="green" text-color="white">Mãe</v-chip>
+          <v-chip v-if="tipoDeEscola" color="green" text-color="white">Mãe</v-chip>
+          <v-chip label outline >Filha</v-chip>
       </div>
       
       <label>Status Financeiro</label>
@@ -50,61 +50,57 @@
 
     <!-- box informações escola -->
     <v-flex xs2 offset-xs3 class="text-xs-left">
-      <label>Endereço:</label>
-      <p>Endereço</p>
-      <label>Localidade:</label>
-      <p>Endereço</p>
-      <label>Dados do imóvel:</label>
-      <p>Endereço</p>
+      <label class="info_sucess">Endereço:</label>
+      <p>{{imovel[0].logradouro}}, {{imovel[0].numero}}</p>
+      <label class="info_sucess">Localidade:</label>
+      <p>{{imovel[0].cidade}}</p>
+      <label class="info_sucess">Dados do imóvel:</label>
+      <p>{{imovel[0].ocupacao}}</p>
     </v-flex>
     <v-flex xs2 class="text-xs-left">
-      <label>Bairro:</label>
-      <p>Endereço</p>
-      <label>Telefone:</label>
-      <p>Endereço</p>
-      <label>Tipo de escola:</label>
-      <p>Endereço</p>
+      <label class="info_sucess">Bairro:</label>
+      <p>{{imovel[0].bairro}}</p>
+      <label class="info_sucess">Telefone:</label>
+      <p>SEM NUMERO AINDA</p>
+      <label class="info_sucess">Tipo de escola:</label>
+      <p>{{imovel[0].modalidade}}</p>
     </v-flex>
     <v-flex xs2 class="text-xs-left">
-      <label>Cep:</label>
-      <p>Endereço</p>
-      <label>Regional:</label>
-      <p>Endereço</p>
-      <label>Tipo de Ensino:</label>
-      <p>Endereço</p>
+      <label class="info_sucess">Cep:</label>
+      <p>{{imovel[0].cep}}</p>
+      <label class="info_sucess">Regional:</label>
+      <p>{{imovel[0].regional}}</p>
+      <label class="info_sucess">Tipo de Ensino:</label>
+      <p>NÃO INFORMADO</p>
     </v-flex>
 
     <!-- Dados do gestor -->
     <v-flex xs8 offset-xs2 class="text-xs-left">
-      <v-avatar class="grey lighten-4">
-        <img src="">
-      </v-avatar>
-      <label>Nome:</label>
-      <label>NOME</label>
-
-      <label>Email:</label>
-      <label>EMAIL</label>
-
-      <label>Tipo:</label>
-      <label>TIPO</label>
-
-      <label>Telefone:</label>
-      <label>TELEFONE</label>
-
-      <label>Forma de Seleção:</label>
-      <label>FORMA DE SELEÇÃO</label>
-
+      <p class="destaque">Dados do Gestor</p>
+      <v-list two-line>
+          <template v-for="gestor in gestores">
+            <v-list-tile>
+              <v-list-tile-avatar>
+               <img src=""/>
+              </v-list-tile-avatar>
+              <v-list-tile-content>
+                <v-list-tile-title>Nome: {{gestor.nome}} Tipo: {{gestor.cargo}}</v-list-tile-title>
+                <v-list-tile-sub-title>Email: {{gestor.email}} Celular: {{gestor.celular}} Forma de seleção: {{gestor.tipo_eleito}}</v-list-tile-sub-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          </template>
+        </v-list>
     </v-flex>
 
     <!-- Tabela de dados Sala Fora -->
-    <v-flex xs8 offset-xs2>
-
+    <v-flex xs8 offset-xs2 class="text-xs-left">
+      <p class="destaque">Dados de Sala Fora</p>
 
     </v-flex>
 
     <!-- Abas com informações financeiro -->
-    <v-flex xs8 offset-xs2>
-      
+    <v-flex xs8 offset-xs2 class="text-xs-left">
+      <p class="destaque">Financeiro</p> 
     </v-flex>
 
    </v-layout>
@@ -121,13 +117,31 @@ export default {
       gestores: [],
       imovel: [],
       msg: 'Welcome to Your Vue.js App',
+      codigoEscola: 88,
     };
   },
-  methods: {},
+  methods: {
+    situacao(){
+      if(this.imovel[0].situacao === 'EM ATIVIDADE') {
+       return true;
+      }
+       return false;
+     },
+     tipoDeEscola(){
+      if(this.imovel[0].anexo === 'MAE') {
+       return true;
+      }
+       return false;
+     }
+  },
   created() {
-    axios.get('http://127.0.0.1:8000/api/imoveis?where[codigo]=88')
+    axios.get(`http://127.0.0.1:8000/api/imoveis?where[codigo]=${this.codigoEscola}`)
       .then((response) => {
         this.imovel = response.data.data;
+      });
+    axios.get(`http://127.0.0.1:8000/api/gestores?where[codigo_imovel]=${this.codigoEscola}`)
+      .then((response) => {
+        this.gestores = response.data.data;
       });
   },
 };
@@ -138,4 +152,15 @@ export default {
 .titulo {
   font-size: 1.6em;
 }
+.destaque{
+  font-size: 1.2em;
+  font-weight: bold;
+}
+.detalhe{
+  font-size: 1em;
+}
+.info_sucess{
+  color: #1F8A70;
+}
+
 </style>
