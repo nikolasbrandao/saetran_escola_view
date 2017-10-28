@@ -96,11 +96,50 @@
     <v-flex xs8 offset-xs2 class="text-xs-left">
       <p class="destaque">Dados de Sala Fora</p>
 
+      <v-data-table
+        v-bind:headers="headers"
+        :items="items"
+        hide-actions
+        class="elevation-1"
+      >
+      <template slot="items" scope="props">
+        <td>{{ props.item.name }}</td>
+        <td class="text-xs-right">{{ props.item.calories }}</td>
+        <td class="text-xs-right">{{ props.item.fat }}</td>
+        <td class="text-xs-right">{{ props.item.carbs }}</td>
+        <td class="text-xs-right">{{ props.item.protein }}</td>
+        <td class="text-xs-right">{{ props.item.sodium }}</td>
+        <td class="text-xs-right">{{ props.item.calcium }}</td>
+        <td class="text-xs-right">{{ props.item.iron }}</td>
+      </template>
+
+  </v-data-table>
     </v-flex>
 
     <!-- Abas com informações financeiro -->
     <v-flex xs8 offset-xs2 class="text-xs-left">
-      <p class="destaque">Financeiro</p> 
+      <p class="destaque">Financeiro</p>
+    </v-flex> 
+    <v-flex xs8 offset-xs2 class="text-xs-left">
+      <p class="destaque">Repasses</p>
+    </v-flex> 
+
+    <v-flex xs2 offset-xs3 class="text-xs-left">
+      <label class="info_sucess">Caixa Escolar:</label>
+      <p>{{manutencaoCalculada}}</p>
+    </v-flex>
+    <v-flex xs2 class="text-xs-left">
+      <label class="info_sucess">PMAE:</label>
+      <p></p>
+    </v-flex>
+    <v-flex xs2 class="text-xs-left">
+      <label class="info_sucess">PDDE:</label>
+      <p></p>
+    </v-flex>
+
+    <v-flex xs2 class="text-xs-left">
+      <label class="info_sucess">Outros:</label>
+      <p></p>
     </v-flex>
 
    </v-layout>
@@ -116,8 +155,15 @@ export default {
     return {
       gestores: [],
       imovel: [],
+      repasses:[],
+      terceirizados:[],
       msg: 'Welcome to Your Vue.js App',
-      codigoEscola: 88,
+      codigoEscola: '',
+      headers:[
+        {
+          text: 'Nome'
+        }
+      ]
     };
   },
   methods: {
@@ -132,9 +178,18 @@ export default {
        return true;
       }
        return false;
-     }
+     },
+  },
+  computed: {
+    manutencaoCalculada(){
+      let total = this.repasses.reduce( (total, currentElement)=>{
+        parseFloat(total) + parseFloat(currentElement.valor);
+      },0);
+    }
   },
   created() {
+    //console.log(this.$route.params.codigoEscola);
+    this.codigoEscola = this.$route.params.codigoEscola;
     axios.get(`http://127.0.0.1:8000/api/imoveis?where[codigo]=${this.codigoEscola}`)
       .then((response) => {
         this.imovel = response.data.data;
@@ -143,6 +198,14 @@ export default {
       .then((response) => {
         this.gestores = response.data.data;
       });
+    axios.get(`http://127.0.0.1:8000/api/repasses?where[codigo_imovel]=${this.codigoEscola}&limit=999`)
+      .then((response) => {
+        this.repasses = response.data.data;
+      });
+    axios.get(`http://127.0.0.1:8000/api/terceirizados?where[codigo_imovel]=${this.codigoEscola}`)
+      .then((response) => {
+        this.terceirizados = response.data.data;
+      });  
   },
 };
 </script>
