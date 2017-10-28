@@ -15,16 +15,18 @@ import('../node_modules/vuetify/dist/vuetify.min.js');
 import('../node_modules/vuetify/dist/vuetify.min.css');
 
 Vue.use(Vuex);
-Vue.use(VueResource);
 Vue.use(VueRouter);
+Vue.use(VueResource);
 Vue.use(Vuetify);
 
 
 Vue.http.options.root = process.env.SERVER;
 
 const store = new Vuex.Store(VuexStore);
+
 const router = new VueRouter({
   routes,
+  mode: 'history',
 });
 
 sync(store, router);

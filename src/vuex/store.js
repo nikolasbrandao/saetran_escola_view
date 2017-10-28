@@ -1,3 +1,7 @@
+import gestor from './modules/gestor';
+
 export default {
-  modules: {},
+  modules: {
+    gestor,
+  },
 };
