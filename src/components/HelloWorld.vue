@@ -4,13 +4,13 @@
     <!-- Titulo -->
      <v-flex xs12>
         <v-icon medium>fa-edit</v-icon>
-        <label class="titulo">Detalhamento da escola</label>
+        <label class="titulo">Detalhamento da escola {{imovel[0].nome}}</label>
      </v-flex>
     
     <!-- Foto e detalhes da unidade -->    
     <v-flex xs8 offset-xs2>
       <v-card>
-        <v-card-media class="white--text" src="/static/doc-images/cards/docks.jpg">
+        <v-card-media class="white--text" src="">
           <v-container fill-height fluid>
             <v-layout fill-height>
               <v-flex align-end flexbox>
@@ -21,7 +21,7 @@
         </v-card-media>
         <v-card-title>
           <div>
-            <span class="grey--text">Nome da escola</span><br>
+            <span> {{imovel[0].nome}} </span><br>
             <span>Codigo no Inep:  e CNPJ: </span><br>
             <span>Status da Escola</span>
           </div>
@@ -35,7 +35,7 @@
         <!-- informações laterais -->    
     <v-flex xs1>
       <label>Vagas na Escola</label>
-      <p>{{vagas}}</p>
+      <p>vagas</p>
       <label>Tipo de escola</label>
       <div class="text-xs-center">
         <v-chip>Anexo</v-chip>
@@ -76,8 +76,8 @@
 
     <!-- Dados do gestor -->
     <v-flex xs8 offset-xs2 class="text-xs-left">
-      <v-avatar :tile="tile" class="grey lighten-4">
-        <img src="/static/apple-touch-icon-180x180.png">
+      <v-avatar class="grey lighten-4">
+        <img src="">
       </v-avatar>
       <label>Nome:</label>
       <label>NOME</label>
@@ -104,8 +104,7 @@
 
     <!-- Abas com informações financeiro -->
     <v-flex xs8 offset-xs2>
-
-
+      
     </v-flex>
 
    </v-layout>
@@ -113,12 +112,23 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'HelloWorld',
   data() {
     return {
+      gestores: [],
+      imovel: [],
       msg: 'Welcome to Your Vue.js App',
     };
+  },
+  methods: {},
+  created() {
+    axios.get('http://127.0.0.1:8000/api/imoveis?where[codigo]=88')
+      .then((response) => {
+        this.imovel = response.data.data;
+      });
   },
 };
 </script>
