@@ -23,5 +23,17 @@ npm run e2e
 # run all tests
 npm test
 ```
+## Para consumir a aplicação
+
+O projeto tem a roda inicial ('/') configurada para receber o codigo do imovel (codigo_imovel) das tabelas oriundas do escola_saetran_api.
+
+Ex:
+``` bash
+# Consultar Liceu Maranhense, com codigo_imovel = 88
+http://localhost:8080/88
+
+# Consultar Tiradentes, com codigo_imovel = 367
+http://localhost:8080/367
+```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
