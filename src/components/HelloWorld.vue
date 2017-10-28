@@ -95,25 +95,6 @@
     <!-- Tabela de dados Sala Fora -->
     <v-flex xs8 offset-xs2 class="text-xs-left">
       <p class="destaque">Dados de Sala Fora</p>
-
-      <v-data-table
-        v-bind:headers="headers"
-        :items="items"
-        hide-actions
-        class="elevation-1"
-      >
-      <template slot="items" scope="props">
-        <td>{{ props.item.name }}</td>
-        <td class="text-xs-right">{{ props.item.calories }}</td>
-        <td class="text-xs-right">{{ props.item.fat }}</td>
-        <td class="text-xs-right">{{ props.item.carbs }}</td>
-        <td class="text-xs-right">{{ props.item.protein }}</td>
-        <td class="text-xs-right">{{ props.item.sodium }}</td>
-        <td class="text-xs-right">{{ props.item.calcium }}</td>
-        <td class="text-xs-right">{{ props.item.iron }}</td>
-      </template>
-
-  </v-data-table>
     </v-flex>
 
     <!-- Abas com informações financeiro -->
@@ -161,8 +142,14 @@ export default {
       codigoEscola: '',
       headers:[
         {
-          text: 'Nome'
-        }
+          text: 'tipo',
+          align: 'left',
+          sortable: false,
+          value: 'terceirizado.tipo'
+        },
+        { text: 'Posto Trabalho', value: 'terceirizado.posto_trabalho' },
+        { text: 'Valor', value: 'terceirizado.valor' },
+        { text: 'Data da ultima atualização', value: 'terceirizado.data_ultima_atualizacao' },
       ]
     };
   },
